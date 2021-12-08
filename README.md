@@ -1,4 +1,18 @@
-# pinyin-data [![Build Status](https://travis-ci.org/mozillazg/pinyin-data.svg?branch=master)](https://travis-ci.org/mozillazg/pinyin-data)
+## upstream
+this is a fork of upstream repo [mozillazg/pinyin-data](https://github.com/mozillazg/pinyin-data)
+
+## commands
+### generate regex matching characters in `pinyin.txt` as `regex.txt`
+```bash
+python prepare_regex.py
+```
+### generate normalized spelling and initials csv of `pinyin.txt` as `pinyin_spelling.txt` and `pinyin_initials.txt`
+```bash
+python prepare_tables.py
+```
+### for normalization mapping
+see [ok.json](ok.json)
+
 
 汉字拼音数据。
 
