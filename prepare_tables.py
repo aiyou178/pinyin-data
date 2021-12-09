@@ -20,8 +20,7 @@ with open('pinyin.txt') as f:
       spellings |= data[character]
 result = []
 for k, v in data.items():
-  for i in v:
-    result.append(f'{k},{i}\n')
+  result.append(f'{k},|{"|".join(v)}|\n')
 with open('pinyin_spelling.txt', 'w') as f:
   f.writelines(result)
 result = []
@@ -34,5 +33,3 @@ with open('pinyin_initials.txt', 'w') as f:
   f.writelines(result)
 without_initials = [i for i in spellings if not initials.match(i)]
 print(len(spellings), len(without_initials), without_initials)
-
-
