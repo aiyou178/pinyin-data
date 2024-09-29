@@ -1,13 +1,17 @@
-import re
 import json
+import re
+
 character_pronounciation = re.compile(r'.+:\s*([^\s]*)\s*#\s+(.+)')
 normalizer = re.compile(r'(.)')
-without_initials = ['ou', 'eng', 'o', 'e', 'er', 'ei', 'ai', 'an', 'en', 'a', 'ao', 'ang']
+without_initials = [
+    'ou', 'eng', 'o', 'e', 'er', 'ei', 'ai', 'an', 'en', 'a', 'ao', 'ang'
+]
 initials = re.compile(r'(b|p|m|f|d|t|n|l|g|k|h|j|q|x|zh|ch|sh|r|z|c|s|y|w)')
-startwith = re.compile(r'(b|p|m|f|d|t|n|l|g|k|h|j|q|x|zh|ch|sh|r|z|c|s|y|w|a|o|e)')
+startwith = re.compile(
+    r'(b|p|m|f|d|t|n|l|g|k|h|j|q|x|zh|ch|sh|r|z|c|s|y|w|a|o|e)')
 data = dict()
 with open('ok.json', 'r') as f:
-    pinyins = json.load(f)
+  pinyins = json.load(f)
 pinyins[','] = ','
 spellings = set()
 with open('pinyin.txt') as f:
@@ -15,17 +19,17 @@ with open('pinyin.txt') as f:
     if match := character_pronounciation.match(i):
       pronounciation, character = match.groups()
       normalized = normalizer.sub(lambda m: pinyins.get(m.group()),
-                                       pronounciation)
+                                  pronounciation)
       data[character] = set(normalized.split(','))
       spellings |= data[character]
 result = []
 for k, v in data.items():
-  result.append(f'{k},|{"|".join(v)}|\n')
+  result.append(f'{k},|{"|".join(sorted(v))}|\n')
 with open('pinyin_spelling.txt', 'w') as f:
   f.writelines(result)
 result = []
 for k, v in data.items():
-  for i in {startwith.match(j).groups() for j in v}:
+  for i in sorted({startwith.match(j).groups(1) for j in v}):
     if not i:
       raise Exception(k, v)
     result.append(f'{k},{i[0]}\n')
