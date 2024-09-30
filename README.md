@@ -12,6 +12,14 @@ python prepare_tables.py
 ```
 ### for normalization mapping
 see [ok.json](ok.json)
+### word & character table with polyphone
+data can be obtained from [infinilabs/analysis-pinyin](https://github.com/infinilabs/analysis-pinyin/tree/master)
+* [polyphone.txt]()
+* [pinyin.txt]()
+```bash
+# output as polyphone.csv
+python prepare_polyphone.py
+```
 
 
 汉字拼音数据。
